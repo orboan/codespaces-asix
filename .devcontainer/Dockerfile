@@ -107,7 +107,7 @@ RUN \
     chmod +x $RESOURCES_PATH/ikernels/java-kernel.sh ;\
     /bin/bash $RESOURCES_PATH/ikernels/java-kernel.sh ;\
     # Cleanup
-    && clean-layer.sh
+    clean-layer.sh
 
 ## java kernel end ##
 
