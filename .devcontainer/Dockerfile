@@ -31,8 +31,8 @@ ENV \
     WORKSPACE_HOME="${HOME}" \
     JUPYTER_ENABLE_LAB=yes \
     PATH=/opt/conda/bin:${PATH} \
-    SDKMAN_DIR="/home/$NB_USER/.sdkman" 
-###    NOTEBOOK_ARGS="--notebook-dir=/home/$NB_USER --no-browser --NotebookApp.password='sha1:c4f869f064af:98fd6cb811e7e05beb33167b272554336c712f14'"
+    SDKMAN_DIR="/home/$NB_USER/.sdkman" \
+    NOTEBOOK_ARGS="--notebook-dir=/home/$NB_USER --no-browser --NotebookApp.password='sha1:c4f869f064af:98fd6cb811e7e05beb33167b272554336c712f14'"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -75,8 +75,6 @@ COPY resources/scripts/install-ssh.sh  /usr/bin/install-ssh.sh
 RUN \
     chmod a+rwx /usr/bin/install-ssh.sh && \
     install-ssh.sh && \
-    # Fix permissions
-    fix-permissions.sh $HOME && \
     # Cleanup
     clean-layer.sh
 

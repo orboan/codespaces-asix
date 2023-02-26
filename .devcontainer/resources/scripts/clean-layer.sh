@@ -30,28 +30,28 @@ chmod 1777 /tmp
 rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*
 
 # Clean conda
-if [ -x "$(command -v conda)" ]; then
+#if [ -x "$(command -v conda)" ]; then
     # Full Conda Cleanup
-    conda clean --all -f -y
+#    conda clean --all -f -y
     # Remove source cache files
-    conda build purge-all
-    if [ -d $CONDA_ROOT ]; then
-        # Cleanup python bytecode files - not needed: https://jcrist.github.io/conda-docker-tips.html
-        find $CONDA_ROOT -type f -name '*.pyc' -delete
-        find $CONDA_ROOT -type l -name '*.pyc' -delete
-    fi
-fi
+#    conda build purge-all
+#    if [ -d $CONDA_ROOT ]; then
+#        # Cleanup python bytecode files - not needed: https://jcrist.github.io/conda-docker-tips.html
+#        find $CONDA_ROOT -type f -name '*.pyc' -delete
+#        find $CONDA_ROOT -type l -name '*.pyc' -delete
+#    fi
+#fi
 
 # Clean npm
-if [ -x "$(command -v npm)" ]; then
-    npm cache clean --force
-    rm -rf $HOME/.npm/* $HOME/.node-gyp/*
-fi
+#if [ -x "$(command -v npm)" ]; then
+#    npm cache clean --force
+#    rm -rf $HOME/.npm/* $HOME/.node-gyp/*
+#fi
 
 # Clean yarn
-if [ -x "$(command -v yarn)" ]; then
-    yarn cache clean --all
-fi
+#if [ -x "$(command -v yarn)" ]; then
+#    yarn cache clean --all
+#fi
 
 # pip is cleaned by the rm -rf $HOME/.cache/* commmand above
 
