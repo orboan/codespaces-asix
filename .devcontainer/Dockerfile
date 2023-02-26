@@ -31,7 +31,7 @@ ENV \
     WORKSPACE_HOME="${HOME}" \
     JUPYTER_ENABLE_LAB=yes \
     PATH=/opt/conda/bin:${PATH} \
-    SDKMAN_DIR="/home/$NB_USER/.sdkman" \
+    SDKMAN_DIR="/opt/apps/sdkman" \
     NOTEBOOK_ARGS="--notebook-dir=/home/$NB_USER --no-browser --NotebookApp.password='sha1:c4f869f064af:98fd6cb811e7e05beb33167b272554336c712f14'"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -115,6 +115,38 @@ RUN \
 
 RUN echo "${NB_USER}:pluralcamp" | chpasswd
 
-USER $NB_USER
+COPY resources/scripts/set-jupyter-config.sh /usr/bin/set-jupyter-config.sh
+COPY resources/scripts/jpy-customize.sh /usr/bin/jpy-customize.sh
+COPY resources/scripts/terminal-customize.sh /usr/bin/terminal-customize.sh
+COPY resources/config $RESOURCES_PATH/config
+COPY resources/logos/java $RESOURCES_PATH/logos/java
+
+## jupyter customizations
+RUN \
+    chmod +x \
+    /usr/bin/set-jupyter-config.sh \
+    /usr/bin/jpy-customize.sh \
+    /usr/bin/terminal-customize.sh  && \
+    /usr/bin/set-jupyter-config.sh && \
+    /usr/bin/jpy-customize.sh && \
+    /usr/bin/terminal-customize.sh && \
+# Directory for apps installed by user && \
+ mkdir -p /opt/apps && \
+ chown $NB_USER:$NB_GID /opt/apps && \
+# icons for jupyter-server-proxy && \
+ mkdir -p /etc/jupyter/icons
+
+COPY resources/icons /etc/jupyter/icons
+
+## Jupyter Server Proxy config:
+ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
+COPY ./proxy-server.entorn-io.py /tmp/
+RUN cat /tmp/proxy-server.entorn-io.py >> $CONFIG_NB_FILE && \
+    ## upgrade and clean
+    apt update && \ 
+    ## apt upgrade -y && \
+    clean-layer.sh
+
+COPY resources/config/.bashrc resources/config/.profile /home/$NB_USER/
 
 
