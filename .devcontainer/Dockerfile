@@ -104,16 +104,16 @@ COPY resources/ikernels $RESOURCES_PATH/ikernels/
 COPY resources/config/ijava $RESOURCES_PATH/config/ijava/
 
 RUN \
-    if [[ "$JAVA_KERNEL" == "true" ]]; then \
-        chmod +x $RESOURCES_PATH/ikernels/java-kernel.sh ;\
-        /bin/bash $RESOURCES_PATH/ikernels/java-kernel.sh ;\
-    fi \
+    chmod +x $RESOURCES_PATH/ikernels/java-kernel.sh ;\
+    /bin/bash $RESOURCES_PATH/ikernels/java-kernel.sh ;\
     # Cleanup
     && clean-layer.sh
 
 ## java kernel end ##
 
 #### KERNELS END ####
+
+RUN echo "${NB_USER}:pluralcamp" | chpasswd
 
 USER $NB_USER
 
