@@ -9,6 +9,7 @@ ARG language=ca_ES
 ENV NB_USER=jovyan
 
 ENV \
+    CONDA_BASE_PATH=/opt/conda \
     IJAVA_VERSION=$ijava_version \
     DOMAIN=pluralcamp.com \
     PYTHON_VERSION_MAJOR=$python_major_version \
@@ -31,7 +32,7 @@ ENV \
     WORKSPACE_HOME="${HOME}" \
     JUPYTER_ENABLE_LAB=yes \
     PATH=/opt/conda/bin:${PATH} \
-    SDKMAN_DIR="/opt/apps/sdkman" \
+    SDKMAN_DIR="/opt/sdkman" \
     NOTEBOOK_ARGS="--notebook-dir=/home/$NB_USER --no-browser --NotebookApp.password='sha1:c4f869f064af:98fd6cb811e7e05beb33167b272554336c712f14'"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -95,6 +96,16 @@ RUN \
     
 ### END RUNTIMES ###
 
+## VS Code Server: https://github.com/codercom/code-server -- latest
+ENV CODESERVER_VER=4.10.0
+COPY resources/ides/vs-code-server.sh $RESOURCES_PATH/ides/vs-code-server.sh
+RUN \
+    chmod +x $RESOURCES_PATH/ides/vs-code-server.sh && \
+    /bin/bash $RESOURCES_PATH/ides/vs-code-server.sh && \
+    # Cleanup
+    clean-layer.sh
+
+
 #### KERNELS START ####
 
 COPY resources/ikernels $RESOURCES_PATH/ikernels/
@@ -113,11 +124,35 @@ RUN \
 
 #### KERNELS END ####
 
-RUN echo "${NB_USER}:pluralcamp" | chpasswd
+ARG password=pluralcamp
+
+### Setting passwd for NB_USER and root
+RUN \
+    echo "${NB_USER}:$password" | chpasswd && \
+    echo "root:$password" | chpasswd
+
+
+## Jupyter Extensions
+COPY resources/jupyter-extensions/install-basic-jupyter-extensions.sh $RESOURCES_PATH/jupyter-extensions/install-basic-jupyter-extensions.sh
+
+RUN \
+    chmod +x $RESOURCES_PATH/jupyter-extensions/install-basic-jupyter-extensions.sh && \
+    /bin/bash $RESOURCES_PATH/jupyter-extensions/install-basic-jupyter-extensions.sh && \
+    # Cleanup
+    clean-layer.sh
+
+
+## Jupyter Server Proxy config
+ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
+COPY ./proxy-server.entorn-io.py /tmp/
+RUN cat /tmp/proxy-server.entorn-io.py >> $CONFIG_NB_FILE
+
+
+## Configurations
 
 COPY resources/scripts/set-jupyter-config.sh /usr/bin/set-jupyter-config.sh
 COPY resources/scripts/jpy-customize.sh /usr/bin/jpy-customize.sh
-COPY resources/scripts/terminal-customize.sh /usr/bin/terminal-customize.sh
+COPY resources/scripts/set-lab-themes.sh /usr/bin/set-lab-themes.sh
 COPY resources/config $RESOURCES_PATH/config
 COPY resources/logos/java $RESOURCES_PATH/logos/java
 
@@ -126,10 +161,11 @@ RUN \
     chmod +x \
     /usr/bin/set-jupyter-config.sh \
     /usr/bin/jpy-customize.sh \
-    /usr/bin/terminal-customize.sh  && \
+    /usr/bin/set-lab-themes.sh \
+    && \
     /usr/bin/set-jupyter-config.sh && \
     /usr/bin/jpy-customize.sh && \
-    /usr/bin/terminal-customize.sh && \
+    /usr/bin/set-lab-themes.sh && \
 # Directory for apps installed by user && \
  mkdir -p /opt/apps && \
  chown $NB_USER:$NB_GID /opt/apps && \
@@ -140,12 +176,6 @@ COPY resources/icons /etc/jupyter/icons
 
 ## Jupyter Server Proxy config:
 ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
-COPY ./proxy-server.entorn-io.py /tmp/
-RUN cat /tmp/proxy-server.entorn-io.py >> $CONFIG_NB_FILE && \
-    ## upgrade and clean
-    apt update && \ 
-    ## apt upgrade -y && \
-    clean-layer.sh
 
 COPY resources/config/.bashrc resources/config/.profile /home/$NB_USER/
 
