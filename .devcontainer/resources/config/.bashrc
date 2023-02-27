@@ -135,8 +135,8 @@ fi
 export COURSIER_CACHE=/opt/conda/share/coursier/cache
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/opt/apps/sdkman"
-[[ -s "/opt/apps/sdkman/bin/sdkman-init.sh" ]] && source "/opt/apps/sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="/opt/sdkman"
+[[ -s "/opt/sdkman/bin/sdkman-init.sh" ]] && source "/opt/sdkman/bin/sdkman-init.sh"
 
 # other needed envs
 export PATH="$PATH:$NPM_PACKAGES/bin"

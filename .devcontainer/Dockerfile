@@ -144,9 +144,10 @@ RUN \
 
 ## Jupyter Server Proxy config
 ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
-COPY ./proxy-server.entorn-io.py /tmp/
-RUN cat /tmp/proxy-server.entorn-io.py >> $CONFIG_NB_FILE
-
+COPY ./proxy-server.entorn-io.py ./jupyter_notebook_config.py /tmp/
+RUN cat /tmp/proxy-server.entorn-io.py >> $CONFIG_NB_FILE && \
+cat /tmp/jupyter_notebook_config.py >> $CONFIG_NB_FILE && \
+clean-layer.sh
 
 ## Configurations
 
@@ -174,9 +175,15 @@ RUN \
 
 COPY resources/icons /etc/jupyter/icons
 
-## Jupyter Server Proxy config:
-ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
-
 COPY resources/config/.bashrc resources/config/.profile /home/$NB_USER/
 
+RUN chown $NB_USER:$NB_GID -R /opt/sdkman
+RUN chown $NB_USER:$NB_GID -R /home/$NB_USER 
+
+RUN jupyter labextension install jupyterlab-launcher-shortcuts
+
+COPY resources/bin-hooks/before-custom.sh /usr/local/bin/before-notebook.d/
+RUN chmod +x /usr/local/bin/before-notebook.d/*
+
+USER $NB_USER
 

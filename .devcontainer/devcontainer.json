@@ -82,7 +82,7 @@
         "java.configuration.runtimes": [
             {
                 "name": "JavaSE-17",
-                "path": "/opt/jdk-17.0.6", 
+                "path": "/opt/sdkman/candidates/java/17.0.6-amzn", 
                 "default": true
             }
         ],
