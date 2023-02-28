@@ -11,10 +11,9 @@
         5000, // Flask
         5900, // VNC server
         6081, // VNC client
-        8080, // http-server
-        8082  // phpLiteAdmin
+        8080, // http-server       
     ],
-    "image": "pluralcamp/entorn-io-dev:0.0.1",    
+    "image": "pluralcamp/entorn-io-dev:ilg-0.0.1",    
     "settings": {
         "breadcrumbs.enabled": false,
         "editor.autoClosingQuotes": "never",
