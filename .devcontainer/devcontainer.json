@@ -5,7 +5,8 @@
         "redhat.java",
         "tomoki1207.pdf",
         "vscjava.vscode-java-debug",
-        "vsls-contrib.gitdoc"
+        "vsls-contrib.gitdoc",
+        "ms-azuretools.vscode-docker"
     ],
     "forwardPorts": [
         5000, // Flask
@@ -162,7 +163,11 @@
         "workbench.welcomePage.walkthroughs.openOnInstall": false
     },
     "features": {
-        "ghcr.io/devcontainers/features/anaconda:1": {},
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+        "ghcr.io/rocker-org/devcontainer-features/miniforge:1": {},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {
+                "version": "latest",
+                "moby": false
+        },
+        "ghcr.io/devcontainers/features/github-cli:1": {}
     }
 }
