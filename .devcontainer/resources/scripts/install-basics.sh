@@ -46,7 +46,8 @@ apt-get update --yes && \
   texlive-xetex \
   texlive-fonts-recommended \
   texlive-plain-generic \
-  xclip 
+  xclip \
+  python3-pip  
 
   # required by mysql and postgresql
 apt-get install -y --no-install-recommends \
