@@ -47,7 +47,5 @@ set_sudo() {
 
 set_sudo
 
-export SUBDOMAIN=$(jq -r ".CODESPACE_NAME" /workspaces/.codespaces/shared/environment-variables.json)
-
 # start sshd service
-service ssh start
+sudo service ssh start

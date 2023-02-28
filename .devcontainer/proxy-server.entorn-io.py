@@ -1,12 +1,20 @@
-username = os.getenv('NB_USER')
-repo_root = os.getenv('JUPYTER_SERVER_ROOT')
+import subprocess
+command = 'jq'
+argument1 = '-r'
+argument2 = '.CODESPACE_NAME'
+argument3 = '/workspaces/.codespaces/shared/environment-variables.json'
 
-home=f"/home/{username}"
-repo = f"/home/{username}/workspaces/{repo_root}"
+result = subprocess.run([command, argument1, argument2, argument3], stdout=subprocess.PIPE, text=True)
+subdomain = result.stdout
+
+if subdomain != '':
+    url = f"https://{subdomain}.github.dev"
+else:
+    url = "https://github.dev"
 
 c.ServerProxy.servers = {
-    'code': {
-      'command': ['/usr/bin/code-server', '--user-data-dir', '.config/Code/', '--extensions-dir', '.vscode/extensions/', '--bind-addr', '0.0.0.0:{port}', '--auth',  'none', '--disable-telemetry', '--disable-update-check', repo],
+    'vscode': {
+      'command': ['python3', '/usr/bin/webserver.py', url, '{port}'],
       'environment': {},
       'absolute_url': False,
       'timeout': 60,

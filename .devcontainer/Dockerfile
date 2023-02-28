@@ -97,13 +97,13 @@ RUN \
 ### END RUNTIMES ###
 
 ## VS Code Server: https://github.com/codercom/code-server -- latest
-ENV CODESERVER_VER=4.10.0
-COPY resources/ides/vs-code-server.sh $RESOURCES_PATH/ides/vs-code-server.sh
-RUN \
-    chmod +x $RESOURCES_PATH/ides/vs-code-server.sh && \
-    /bin/bash $RESOURCES_PATH/ides/vs-code-server.sh && \
+#ENV CODESERVER_VER=4.10.0
+#COPY resources/ides/vs-code-server.sh $RESOURCES_PATH/ides/vs-code-server.sh
+#RUN \
+#    chmod +x $RESOURCES_PATH/ides/vs-code-server.sh && \
+#    /bin/bash $RESOURCES_PATH/ides/vs-code-server.sh && \
     # Cleanup
-    clean-layer.sh
+#    clean-layer.sh
 
 
 #### KERNELS START ####
@@ -121,6 +121,15 @@ RUN \
     clean-layer.sh
 
 ## java kernel end ##
+
+## javascript kernel start ##
+RUN \
+    chmod +x $RESOURCES_PATH/ikernels/tslabs-kernel.sh ;\
+    /bin/bash $RESOURCES_PATH/ikernels/tslabs-kernel.sh ;\
+    # Cleanup
+    clean-layer.sh
+
+## javascript kernel end ##
 
 #### KERNELS END ####
 
@@ -144,18 +153,20 @@ RUN \
 
 ## Jupyter Server Proxy config
 ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
-COPY ./proxy-server.entorn-io.py ./jupyter_notebook_config.py /tmp/
+COPY ./proxy-server.entorn-io.py /tmp/
 RUN cat /tmp/proxy-server.entorn-io.py >> $CONFIG_NB_FILE && \
-cat /tmp/jupyter_notebook_config.py >> $CONFIG_NB_FILE && \
+rm /etc/jupyter/jupyter_notebook_config.py && \
 clean-layer.sh
+
+COPY webserver.py /usr/bin/webserver.py
 
 ## Configurations
 
-COPY resources/scripts/set-jupyter-config.sh /usr/bin/set-jupyter-config.sh
-COPY resources/scripts/jpy-customize.sh /usr/bin/jpy-customize.sh
-COPY resources/scripts/set-lab-themes.sh /usr/bin/set-lab-themes.sh
+COPY resources/scripts/set-jupyter-config.sh resources/scripts/jpy-customize.sh resources/scripts/set-lab-themes.sh /usr/bin/
+#COPY resources/scripts/jpy-customize.sh /usr/bin/jpy-customize.sh
+#COPY resources/scripts/set-lab-themes.sh /usr/bin/set-lab-themes.sh
 COPY resources/config $RESOURCES_PATH/config
-COPY resources/logos/java $RESOURCES_PATH/logos/java
+COPY resources/logos $RESOURCES_PATH/logos
 
 ## jupyter customizations
 RUN \
@@ -168,22 +179,28 @@ RUN \
     /usr/bin/jpy-customize.sh && \
     /usr/bin/set-lab-themes.sh && \
 # Directory for apps installed by user && \
- mkdir -p /opt/apps && \
- chown $NB_USER:$NB_GID /opt/apps && \
+    mkdir -p /opt/apps && \
+    chown $NB_USER:$NB_GID /opt/apps && \
 # icons for jupyter-server-proxy && \
- mkdir -p /etc/jupyter/icons
+    mkdir -p /etc/jupyter/icons
 
 COPY resources/icons /etc/jupyter/icons
 
 COPY resources/config/.bashrc resources/config/.profile /home/$NB_USER/
 
 RUN chown $NB_USER:$NB_GID -R /opt/sdkman
-RUN chown $NB_USER:$NB_GID -R /home/$NB_USER 
-
-RUN jupyter labextension install jupyterlab-launcher-shortcuts
+RUN find /home/$NB_USER -maxdepth 3 -type d -exec chown $NB_USER:$NB_GID {} \; 
+RUN find /home/$NB_USER -maxdepth 3 -type f -exec chown $NB_USER:$NB_GID {} \;
 
 COPY resources/bin-hooks/before-custom.sh /usr/local/bin/before-notebook.d/
 RUN chmod +x /usr/local/bin/before-notebook.d/*
 
+RUN echo "$NB_USER  ALL=(ALL)  NOPASSWD: ALL" | sudo tee --append /etc/sudoers && \
+mkdir -p /workspaces && chown -R $NB_USER:$NB_GID /workspaces
+
 USER $NB_USER
+
+RUN \
+	rmdir /home/$NB_USER/work && \	
+	ln -s /workspaces /home/$NB_USER/workspaces
 
