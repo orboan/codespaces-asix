@@ -43,7 +43,10 @@ apt-get install -y --no-install-recommends \
 
   # Json Processor
 apt-get install -y --no-install-recommends \
-  jq 
+  jq \
+  psmisc
+
+# psmisc => killall, fuser, pstree, peekfd
 
   # sqlite3 driver - required for pyenv
 #apt-get install -y --no-install-recommends \

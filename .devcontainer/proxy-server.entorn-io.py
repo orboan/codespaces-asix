@@ -12,9 +12,11 @@ if subdomain != '':
 else:
     url = "https://github.dev"
 
+URL = url.replace(" ", "")
+
 c.ServerProxy.servers = {
     'vscode': {
-      'command': ['python3', '/usr/bin/webserver.py', url, '{port}'],
+      'command': ['python3', '/usr/bin/webserver.py', URL, '{port}'],
       'environment': {},
       'absolute_url': False,
       'timeout': 60,
