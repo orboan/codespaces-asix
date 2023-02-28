@@ -6,12 +6,12 @@
         "tomoki1207.pdf",
         "vscjava.vscode-java-debug",
         "vsls-contrib.gitdoc",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "ms-toolsai.jupyter"
     ],
     "forwardPorts": [
-        5000, // Flask
+        2222, // ssh server
         5900, // VNC server
-        6081, // VNC client
         8080, // http-server       
     ],
     "image": "pluralcamp/entorn-io-dev:ilg-0.0.1",    
