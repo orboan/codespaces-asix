@@ -150,16 +150,6 @@ RUN \
     # Cleanup
     clean-layer.sh
 
-
-## Jupyter Server Proxy config
-ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
-COPY ./proxy-server.entorn-io.py /tmp/
-RUN cat /tmp/proxy-server.entorn-io.py >> $CONFIG_NB_FILE && \
-rm /etc/jupyter/jupyter_notebook_config.py && \
-clean-layer.sh
-
-COPY webserver.py /usr/bin/webserver.py
-
 ## Configurations
 
 COPY resources/scripts/set-jupyter-config.sh resources/scripts/jpy-customize.sh resources/scripts/set-lab-themes.sh /usr/bin/
@@ -197,6 +187,15 @@ RUN chmod +x /usr/local/bin/before-notebook.d/*
 
 RUN echo "$NB_USER  ALL=(ALL)  NOPASSWD: ALL" | sudo tee --append /etc/sudoers && \
 mkdir -p /workspaces && chown -R $NB_USER:$NB_GID /workspaces
+
+## Jupyter Server Proxy config
+ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
+COPY ./proxy-server.entorn-io.py /tmp/
+RUN cat /tmp/proxy-server.entorn-io.py >> $CONFIG_NB_FILE && \
+rm /etc/jupyter/jupyter_notebook_config.py && \
+clean-layer.sh
+
+COPY webserver.py /usr/bin/webserver.py
 
 USER $NB_USER
 

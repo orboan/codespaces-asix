@@ -5,18 +5,11 @@ argument2 = '.CODESPACE_NAME'
 argument3 = '/workspaces/.codespaces/shared/environment-variables.json'
 
 result = subprocess.run([command, argument1, argument2, argument3], stdout=subprocess.PIPE, text=True)
-subdomain = result.stdout
-
-if subdomain != '':
-    url = f"https://{subdomain}.github.dev"
-else:
-    url = "https://github.dev"
-
-URL = url.replace(" ", "")
+subdomain = result.stdout.replace(" ", "")
 
 c.ServerProxy.servers = {
     'vscode': {
-      'command': ['python3', '/usr/bin/webserver.py', f'{URL}', '{port}'],
+        'command': ['python3', '/usr/bin/webserver.py', f'{subdomain}', 'github.dev', '{port}'],
       'environment': {},
       'absolute_url': False,
       'timeout': 60,
