@@ -160,5 +160,9 @@
         "workbench.statusBar.visible": false,
         "workbench.tips.enabled": false,
         "workbench.welcomePage.walkthroughs.openOnInstall": false
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/anaconda:1": {},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     }
 }
