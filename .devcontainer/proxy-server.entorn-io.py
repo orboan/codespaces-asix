@@ -16,7 +16,7 @@ URL = url.replace(" ", "")
 
 c.ServerProxy.servers = {
     'vscode': {
-      'command': ['python3', '/usr/bin/webserver.py', URL, '{port}'],
+      'command': ['python3', '/usr/bin/webserver.py', f'{URL}', '{port}'],
       'environment': {},
       'absolute_url': False,
       'timeout': 60,
