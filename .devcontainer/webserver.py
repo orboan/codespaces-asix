@@ -11,6 +11,11 @@ if len(sys.argv) == 4:
     URL= 'https://' + sys.argv[1].strip() + '.' + sys.argv[2].strip()
     PORT = int(sys.argv[3])
 
+KEEP_RUNNING = True
+
+def keep_running():
+    return KEEP_RUNNING
+
 import http.server
 import socketserver
 
@@ -19,19 +24,11 @@ class RedirectHandler(http.server.SimpleHTTPRequestHandler):
         self.send_response(301)
         self.send_header('Location', f'{URL}')
         self.end_headers()
+        KEEP_RUNNING = False
 
 with socketserver.TCPServer(("", PORT), RedirectHandler) as httpd:
     print("Serving at port", PORT)
-    print("Will redirect to", URL)
-    # Create a separate thread to handle the server shutdown
-    def shutdown_server():
-        import time
-        time.sleep(5)
-        httpd.shutdown()
-    
-    shutdown_thread = threading.Thread(target=shutdown_server)
-    shutdown_thread.start()
-    
-    # Start serving requests
-    httpd.serve_forever()
+    while keep_running():
+        httpd.handle_request()
 
+        

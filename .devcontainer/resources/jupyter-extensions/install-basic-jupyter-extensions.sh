@@ -9,20 +9,10 @@ mamba install -c conda-forge --yes \
   jupyter_nbextensions_configurator \
   jupyter_contrib_nbextensions \
   jupyter-server-proxy \
-  jupyterlab-drawio
+  jupyterlab-drawio \
+  jupyterlab-git \
+  jupyterlab-pullrequests
 #  jupyter-videochat 
-
-#mamba install -y -c conda-forge \
-#	jupyterlab=3 \
-#	jupyterlab-git 
-	#jupyterlab-pullrequests
-	#diff-match-patch
-	#jupyter_server=2.0.1
-
-
-jupyter labextension install @jupyterlab/server-proxy 
-
-#jupyter server extension enable --sys-prefix --py jupyter_videochat 
 
 pip install nbgitpuller
 
