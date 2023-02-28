@@ -163,7 +163,6 @@
         "workbench.welcomePage.walkthroughs.openOnInstall": false
     },
     "features": {
-        "ghcr.io/rocker-org/devcontainer-features/miniforge:1": {},
         "ghcr.io/devcontainers/features/docker-in-docker:2": {
                 "version": "latest",
                 "moby": false
