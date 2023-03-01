@@ -1,6 +1,10 @@
 {
-    "image": "pluralcamp/entorn-io-dev:ilg-0.0.1",    
-    "features": {
-	"ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  "image": "mcr.microsoft.com/devcontainers/typescript-node",
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["streetsidesoftware.code-spell-checker"]
     }
+  },
+  "forwardPorts": [3000]
 }
