@@ -339,6 +339,9 @@ RUN \
 
 COPY webserver.py /usr/bin/webserver.py
 
+COPY resources/scripts/startup.sh /usr/bin/
+RUN chmod +x /usr/bin/startup.sh
+
 USER $NB_USER
 
 # Add R mimetype option to specify how the plot returns from R to the browser
