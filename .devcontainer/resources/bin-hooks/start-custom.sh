@@ -47,5 +47,7 @@ set_sudo() {
 
 set_sudo
 
+sudo sed -i "s/#Port 22/Port 2222/g" /etc/ssh/sshd_config
+
 # start sshd service
 sudo service ssh start

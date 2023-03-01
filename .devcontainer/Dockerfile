@@ -275,13 +275,13 @@ RUN \
 COPY resources/icons /etc/jupyter/icons
 
 COPY resources/config/.bashrc resources/config/.profile /home/$NB_USER/
-COPY resources/bin-hooks/before-custom.sh /usr/local/bin/before-notebook.d/
+COPY resources/bin-hooks/start-custom.sh /usr/local/bin/start-notebook.d/
 
 RUN \
 	chown $NB_USER:$NB_GID -R /opt/sdkman && \
 	find /home/$NB_USER -maxdepth 3 -type d -exec chown $NB_USER:$NB_GID {} \; && \
 	find /home/$NB_USER -maxdepth 3 -type f -exec chown $NB_USER:$NB_GID {} \; && \
-	chmod +x /usr/local/bin/before-notebook.d/*
+	chmod +x /usr/local/bin/start-notebook.d/*
 
 
 ## Jupyter Server Proxy config
