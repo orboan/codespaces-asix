@@ -112,8 +112,4 @@
         "workbench.tips.enabled": false,
         "workbench.welcomePage.walkthroughs.openOnInstall": false
     },
-    "features": {
-        "ghcr.io/devcontainers/features/github-cli:1": {},
-	"maven": "latest"
-    }
 }
