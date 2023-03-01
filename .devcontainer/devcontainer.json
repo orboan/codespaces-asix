@@ -4,8 +4,7 @@
         "ms-vsliveshare.vsliveshare-pack",
         "vscjava.vscode-java-pack",
         "tomoki1207.pdf",
-        "vsls-contrib.gitdoc",
-        "ms-azuretools.vscode-docker"
+        "vsls-contrib.gitdoc"       
     ],
     "forwardPorts": [
         2222, // ssh server
