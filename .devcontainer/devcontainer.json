@@ -2,7 +2,7 @@
     "extensions": [
         "ms-python.python",
         "ms-vsliveshare.vsliveshare-pack",
-        "vscjava.vscode-java-pack",
+        "redhat.java",
         "tomoki1207.pdf",
         "vsls-contrib.gitdoc"       
     ],
