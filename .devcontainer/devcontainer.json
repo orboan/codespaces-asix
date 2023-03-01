@@ -1,8 +1,4 @@
 {
-    "forwardPorts": [
-        2222, // ssh server       
-        8080       
-    ],
     "image": "pluralcamp/entorn-io-dev:ilg-0.0.1",    
     "features": {
     	"ghcr.io/devcontainers/features/github-cli:1": {},
