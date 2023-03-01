@@ -34,18 +34,6 @@
         },
         "editor.renderWhitespace": "selection",
         "editor.selectionHighlight": false,
-        "editor.semanticTokenColorCustomizations": {
-            "[GitHub Dark Default]": {
-                "rules": {
-                    "type": "#FF7E76"
-                }
-            },
-            "[GitHub Light Default]": {
-                "rules": {
-                    "type": "#D2343F"
-                }
-            }
-        },
         "editor.suggestOnTriggerCharacters": false,
         "extensions.ignoreRecommendations": true,
         "explorer.compactFolders": false,
@@ -115,46 +103,11 @@
         "terminal.integrated.tabs.description": "${task}${separator}${local}", /* Remove cwdFolder from description */
         "terminal.integrated.tabs.showActiveTerminal": "never",
         "window.autoDetectColorScheme": true,
-        "workbench.colorCustomizations": {
-            "editor.lineHighlightBorder": "#0000", /* Disable gray border-{bottom,top} on active line */
-            "editorError.foreground": "#0000", /* Disable red squiggles */
-            "editorWarning.foreground": "#0000", /* Disable yellow squiggles */
-            "editorGutter.addedBackground": "#0000",
-            "editorGutter.deletedBackground": "#0000",
-            "editorGutter.modifiedBackground": "#0000", /* Disable yellow bars to left of lines modified since last commit */
-            "[GitHub Dark Default]": {
-                "activityBar.background": "#000",
-                "editor.background": "#000",
-                "editor.lineHighlightBackground": "#0000",
-                "editor.lineHighlightBorder": "#0000",
-                "editorWhitespace.foreground": "#59A5FC",
-                "panel.background": "#000",
-                "sideBar.background": "#000",
-                "terminal.foreground": "#eab676",
-                "terminal.background": "#000"
-            },
-            "[GitHub Light Default]": {
-                "activityBar.background": "#eab676",
-                "editor.background": "#eab676",
-                "editor.lineHighlightBackground": "#fff0",
-                "editor.lineHighlightBorder": "#fff0",
-                "editorWhitespace.foreground": "#1167D7",
-                "panel.background": "#eab676",
-                "sideBar.background": "#eab676",
-                "terminal.foreground": "#000",
-                "terminal.background": "#eab676"
-            }
-        },
         "window.commandCenter": false,
-        "workbench.editorAssociations": {
-            "*.wav": "vscode.audioPreview"
-        },
         "workbench.editor.closeOnFileDelete": true,
         "workbench.editor.enablePreview": false,
         "workbench.editor.untitled.hint": "hidden",
         "workbench.iconTheme": "vs-minimal", /* Simplify icons */
-        "workbench.preferredDarkColorTheme": "GitHub Dark Default",
-        "workbench.preferredLightColorTheme": "GitHub Light Default",
         "workbench.startupEditor": "none",
         "workbench.statusBar.visible": false,
         "workbench.tips.enabled": false,
@@ -165,6 +118,7 @@
                 "version": "latest",
                 "moby": false
         },
-        "ghcr.io/devcontainers/features/github-cli:1": {}
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+	"maven": "latest"
     }
 }
