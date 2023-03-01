@@ -1,7 +1,12 @@
 {
+    "forwardPorts": [
+        2222, // ssh server
+        5900, // VNC server
+        8080       
+    ],
     "image": "pluralcamp/entorn-io-dev:ilg-0.0.1",    
     "features": {
     	"ghcr.io/devcontainers/features/github-cli:1": {},
 	"ghcr.io/devcontainers/features/docker-in-docker:2": {}
-    }
+	}
 }
