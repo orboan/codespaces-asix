@@ -339,8 +339,8 @@ RUN \
 
 COPY webserver.py /usr/bin/webserver.py
 
-COPY resources/scripts/startup.sh /usr/bin/
-RUN chmod +x /usr/bin/startup.sh
+COPY resources/scripts/startup.sh /home/$NB_USER/.local/bin/startup.sh
+RUN chmod +x /home/$NB_USER/.local/bin/startup.sh
 
 USER $NB_USER
 
