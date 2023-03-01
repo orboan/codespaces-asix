@@ -2,17 +2,15 @@
     "extensions": [
         "ms-python.python",
         "ms-vsliveshare.vsliveshare-pack",
-        "redhat.java",
+        "vscjava.vscode-java-pack",
         "tomoki1207.pdf",
-        "vscjava.vscode-java-debug",
         "vsls-contrib.gitdoc",
-        "ms-azuretools.vscode-docker",
-        "ms-toolsai.jupyter"
+        "ms-azuretools.vscode-docker"
     ],
     "forwardPorts": [
         2222, // ssh server
         5900, // VNC server
-        8080, // http-server       
+        8080       
     ],
     "image": "pluralcamp/entorn-io-dev:ilg-0.0.1",    
     "settings": {
@@ -132,19 +130,19 @@
                 "editorWhitespace.foreground": "#59A5FC",
                 "panel.background": "#000",
                 "sideBar.background": "#000",
-                "terminal.foreground": "#fff",
+                "terminal.foreground": "#eab676",
                 "terminal.background": "#000"
             },
             "[GitHub Light Default]": {
-                "activityBar.background": "#fff",
-                "editor.background": "#fff",
+                "activityBar.background": "#eab676",
+                "editor.background": "#eab676",
                 "editor.lineHighlightBackground": "#fff0",
                 "editor.lineHighlightBorder": "#fff0",
                 "editorWhitespace.foreground": "#1167D7",
-                "panel.background": "#fff",
-                "sideBar.background": "#fff",
+                "panel.background": "#eab676",
+                "sideBar.background": "#eab676",
                 "terminal.foreground": "#000",
-                "terminal.background": "#fff"
+                "terminal.background": "#eab676"
             }
         },
         "window.commandCenter": false,

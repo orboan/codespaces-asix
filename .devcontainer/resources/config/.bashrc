@@ -140,7 +140,7 @@ export SDKMAN_DIR="/opt/sdkman"
 
 # other needed envs
 export PATH="$PATH:$NPM_PACKAGES/bin"
-export DOCKER_HOST=tcp://localhost:2375
+#export DOCKER_HOST=tcp://localhost:2375
 export APPDIR=/opt/apps/jetbrains-toolbox
 export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
