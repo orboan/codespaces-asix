@@ -17,4 +17,7 @@ source "$SDKMAN_DIR/bin/sdkman-init.sh"
 sdk install java ${JAVA_VERSION}-${JAVA_PROVIDER}
 chown $NB_USER:$NB_GID -R $SDKMAN_DIR
 
+#install maven
+sdk install maven
+
 exit 0

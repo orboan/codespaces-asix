@@ -23,10 +23,6 @@ set -e
 	--install-extension vsls-contrib.gitdoc \
 	--install-extension GitHub.vscode-pull-request-github \
 	--install-extension GitHub.github-vscode-theme \
-	--install-extension GitHub.codespaces \
 	--install-extension ms-azuretools.vscode-docker \
-	--install-extension ms-toolsai.jupyter \
-	--install-extension VisualStudioExptTeam.vscodeintellicode \
-	--install-extension VisualStudioExptTeam.intellicode-api-usage-examples \
-	--install-extension ms-python.vscode-pylance
+	--install-extension ms-toolsai.jupyter 
 

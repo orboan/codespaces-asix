@@ -250,6 +250,50 @@ RUN \
     # Cleanup
     clean-layer.sh
 
+
+## VS Code
+## VS Code Server: https://github.com/codercom/code-server -- latest
+ENV CODESERVER_VER=4.10.0
+COPY resources/ides/vs-code-server.sh $RESOURCES_PATH/ides/vs-code-server.sh
+RUN \
+    chmod +x $RESOURCES_PATH/ides/vs-code-server.sh && \
+    /bin/bash $RESOURCES_PATH/ides/vs-code-server.sh && \
+    # Cleanup
+    clean-layer.sh
+
+
+## DBs
+
+COPY resources/docker $RESOURCES_PATH/docker/
+COPY resources/dbs $RESOURCES_PATH/dbs/
+
+########## postgres start
+ARG PG=true
+#COPY resources/dbs/postgres $RESOURCES_PATH/dbs/postgres/
+RUN \
+    mkdir -p /home/$NB_USER/.local/bin && chown -R $NB_USER:$NB_GID /home/$NB_USER/.local/bin && \
+    if [ "$PG" == "true" ]; then \
+        chmod +x $RESOURCES_PATH/dbs/postgres/pg-install.sh ;\
+        /bin/bash $RESOURCES_PATH/dbs/postgres/pg-install.sh ;\
+    fi \
+    # Cleanup
+    && clean-layer.sh
+
+######### mysql start
+ARG MYSQL=true
+#COPY resources/dbs/mysql/ $RESOURCES_PATH/dbs/mysql/
+RUN \
+    mkdir -p /home/$NB_USER/.local/bin && chown -R $NB_USER:$NB_GID /home/$NB_USER/.local/bin && \
+    if [ "$MYSQL" == "true" ]; then \
+        chmod +x $RESOURCES_PATH/dbs/mysql/mysql-install.sh ;\
+        /bin/bash $RESOURCES_PATH/dbs/mysql/mysql-install.sh ;\
+    fi \
+    # Cleanup
+    && clean-layer.sh
+
+######### mysql end
+
+
 ## Configurations
 
 COPY resources/scripts/set-jupyter-config.sh resources/scripts/jpy-customize.sh resources/scripts/set-lab-themes.sh /usr/bin/
@@ -281,16 +325,9 @@ RUN \
 	chown $NB_USER:$NB_GID -R /opt/sdkman && \
 	find /home/$NB_USER -maxdepth 3 -type d -exec chown $NB_USER:$NB_GID {} \; && \
 	find /home/$NB_USER -maxdepth 3 -type f -exec chown $NB_USER:$NB_GID {} \; && \
+        mkdir -p /home/$NB_USER/.local/share/jupyter/ && \
+        chown entorn:users -R /home/$NB_USER/.local && \
 	chmod +x /usr/local/bin/start-notebook.d/*
-
-## VS Code Server: https://github.com/codercom/code-server -- latest
-ENV CODESERVER_VER=4.10.0
-COPY resources/ides/vs-code-server.sh $RESOURCES_PATH/ides/vs-code-server.sh
-RUN \
-    chmod +x $RESOURCES_PATH/ides/vs-code-server.sh && \
-    /bin/bash $RESOURCES_PATH/ides/vs-code-server.sh && \
-    # Cleanup
-    clean-layer.sh
 
 ## Jupyter Server Proxy config
 ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
