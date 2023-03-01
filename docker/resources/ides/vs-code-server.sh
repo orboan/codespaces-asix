@@ -26,3 +26,6 @@ set -e
 	--install-extension ms-azuretools.vscode-docker \
 	--install-extension ms-toolsai.jupyter'
 
+    mkdir -p /home/$NB_USER/.vscode
+    mkdir -p /home/$NB_USER/.local/share/code-server/extensions 
+    ln -s /home/$NB_USER/.local/share/code-server/extensions ~/.vscode/extensions
