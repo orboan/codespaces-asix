@@ -16,7 +16,7 @@ set -e
         ln -s /opt/conda/share/npm-packages/bin/code-server /usr/bin/code-server
     fi 
 
-    code-server \
+    sudo -H -u $NB_USER bash -c 'code-server \
 	--install-extension ms-python.python \
 	--install-extension vscjava.vscode-java-pack \
 	--install-extension yzhang.markdown-all-in-one \
@@ -24,5 +24,5 @@ set -e
 	--install-extension GitHub.vscode-pull-request-github \
 	--install-extension GitHub.github-vscode-theme \
 	--install-extension ms-azuretools.vscode-docker \
-	--install-extension ms-toolsai.jupyter 
+	--install-extension ms-toolsai.jupyter'
 
