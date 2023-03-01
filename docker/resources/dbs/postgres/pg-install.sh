@@ -2,8 +2,8 @@
 
 workdir=/resources/docker
 
-mkdir -p /home/$NB_USER/.docker/postgres
-cp -r $workdir/compose/postgres /home/$NB_USER/.docker/
+mkdir -p /home/$NB_USER/.dockerc/postgres
+cp -r $workdir/compose/postgres /home/$NB_USER/.dockerc/
 cp -r $workdir/bin/pg* /home/$NB_USER/.local/bin/
 cp -r $workdir/bin/postgres* /home/$NB_USER/.local/bin/
 chmod +x /home/$NB_USER/.local/bin/pg*

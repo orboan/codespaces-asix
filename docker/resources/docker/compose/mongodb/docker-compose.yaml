@@ -12,7 +12,7 @@ services:
     volumes:
       - data:/data/db
       - /opt/dbdata/sampledb/mongodb:/sampledb/mongodb
-      - ~/.docker/mongodb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+      - ~/.dockerc/mongodb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
 volumes:
   data:
 

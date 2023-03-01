@@ -2,8 +2,8 @@
 
 workdir=/resources/docker
 
-mkdir -p /home/$NB_USER/.docker/mysql
-cp -r $workdir/compose/mysql /home/$NB_USER/.docker/
+mkdir -p /home/$NB_USER/.dockerc/mysql
+cp -r $workdir/compose/mysql /home/$NB_USER/.dockerc/
 cp -r $workdir/bin/my* /home/$NB_USER/.local/bin/
 #cp -r $workdir/bin/mysql* /home/$NB_USER/.local/bin/
 chmod +x /home/$NB_USER/.local/bin/my*
