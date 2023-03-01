@@ -1,10 +1,4 @@
 {
-    "extensions": [
-        "ms-python.python",
-        "vscjava.vscode-java-pack",
-        "vsls-contrib.gitdoc",
-	"yzhang.markdown-all-in-one"
-    ],
     "forwardPorts": [
         2222, // ssh server       
         8080       

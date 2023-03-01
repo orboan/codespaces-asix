@@ -1,15 +1,11 @@
-import subprocess
-command = 'jq'
-argument1 = '-r'
-argument2 = '.CODESPACE_NAME'
-argument3 = '/workspaces/.codespaces/shared/environment-variables.json'
+username = os.getenv('NB_USER')
 
-result = subprocess.run([command, argument1, argument2, argument3], stdout=subprocess.PIPE, text=True)
-subdomain = result.stdout.replace(" ", "")
+home=f"/home/{username}"
+workspaces = f"/workspaces"
 
 c.ServerProxy.servers = {
-    'vscode': {
-        'command': ['python3', '/usr/bin/webserver.py', f'{subdomain}', 'github.dev', '{port}'],
+    'code': {
+      'command': ['/usr/bin/code-server', '--user-data-dir', '.config/Code/', '--extensions-dir', '.vscode/extensions/', '--bind-addr', '0.0.0.0:{port}', '--auth',  'none', '--disable-telemetry', '--disable-update-check', workspaces],
       'environment': {},
       'absolute_url': False,
       'timeout': 60,
@@ -18,5 +14,5 @@ c.ServerProxy.servers = {
               'icon_path': os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                         'icons', 'vscode.svg')
       }
-    },
+    }
 }

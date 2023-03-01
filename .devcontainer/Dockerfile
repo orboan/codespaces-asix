@@ -283,6 +283,14 @@ RUN \
 	find /home/$NB_USER -maxdepth 3 -type f -exec chown $NB_USER:$NB_GID {} \; && \
 	chmod +x /usr/local/bin/start-notebook.d/*
 
+## VS Code Server: https://github.com/codercom/code-server -- latest
+ENV CODESERVER_VER=4.10.0
+COPY resources/ides/vs-code-server.sh $RESOURCES_PATH/ides/vs-code-server.sh
+RUN \
+    chmod +x $RESOURCES_PATH/ides/vs-code-server.sh && \
+    /bin/bash $RESOURCES_PATH/ides/vs-code-server.sh && \
+    # Cleanup
+    clean-layer.sh
 
 ## Jupyter Server Proxy config
 ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
