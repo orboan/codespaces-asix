@@ -250,18 +250,18 @@ RUN \
     # Cleanup
     clean-layer.sh
 
-
+USER $NB_USER
 ## VS Code
 ## VS Code Server: https://github.com/codercom/code-server -- latest
 ENV CODESERVER_VER=4.10.0
 COPY resources/ides/vs-code-server.sh $RESOURCES_PATH/ides/vs-code-server.sh
 RUN \
-    chmod +x $RESOURCES_PATH/ides/vs-code-server.sh && \
+    sudo chmod +x $RESOURCES_PATH/ides/vs-code-server.sh && \
     /bin/bash $RESOURCES_PATH/ides/vs-code-server.sh && \
     # Cleanup
     clean-layer.sh
 
-
+USER root
 ## DBs
 
 COPY resources/docker $RESOURCES_PATH/docker/

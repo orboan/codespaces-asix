@@ -7,11 +7,11 @@ set -e
     echo "Installing VS Code Server. Please wait..."
     cd ${RESOURCES_PATH}
     VS_CODE_VERSION=${CODESERVER_VER}
-    curl -fsSL https://code-server.dev/install.sh | sh
+    curl -fsSL https://code-server.dev/install.sh | sudo sh
     #rmdir /home/$NB_USER/work
-    mkdir -p /home/$NB_USER/workspaces && chown $NB_USER:$NB_GID -R /home/$NB_USER/workspaces
-    mkdir -p /home/$NB_USER/.config/Code/ && chown $NB_USER:$NB_GID -R /home/$NB_USER/.config
-    mkdir -p /home/$NB_USER/.vscode/extensions/ && chown $NB_USER:$NB_GID -R /home/$NB_USER/.vscode
+    mkdir -p /home/$NB_USER/workspaces && sudo chown $NB_USER:$NB_GID -R /home/$NB_USER/workspaces
+    mkdir -p /home/$NB_USER/.config/Code/ && sudo chown $NB_USER:$NB_GID -R /home/$NB_USER/.config
+    mkdir -p /home/$NB_USER/.vscode/extensions/ && sudo chown $NB_USER:$NB_GID -R /home/$NB_USER/.vscode
     if [[ ! -e /usr/bin/code-server ]]; then 
         ln -s /opt/conda/share/npm-packages/bin/code-server /usr/bin/code-server
     fi 
