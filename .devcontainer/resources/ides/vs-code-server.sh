@@ -9,7 +9,7 @@ if [ ! -f "/usr/local/bin/code-server"  ]; then
     cd ${RESOURCES_PATH}
     VS_CODE_VERSION=${CODESERVER_VER}
     curl -fsSL https://code-server.dev/install.sh | sh
-    rmdir /home/$NB_USER/work
+    #rmdir /home/$NB_USER/work
     mkdir -p /home/$NB_USER/workspaces && chown $NB_USER:$NB_GID -R /home/$NB_USER/workspaces
     mkdir -p /home/$NB_USER/.config/Code/ && chown $NB_USER:$NB_GID -R /home/$NB_USER/.config
     mkdir -p /home/$NB_USER/.vscode/extensions/ && chown $NB_USER:$NB_GID -R /home/$NB_USER/.vscode
