@@ -4,5 +4,14 @@
 	"ghcr.io/devcontainers/features/docker-in-docker:2": {},
 	"ghcr.io/devcontainers/features/github-cli:1": {}
     },
-    "postStartCommand": "sudo /home/$NB_USER/.local/bin/startup.sh"
+	"postStartCommand": "sudo /home/$NB_USER/.local/bin/startup.sh",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"vscjava.vscode-java-pack",
+				"ms-python.python",
+				"Vikasdubey0551.jupyterlab-browser"
+			]
+		}
+	}
 }
