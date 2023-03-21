@@ -6,8 +6,6 @@ ARG NB_USER="entorn"
 ARG NB_UID="1000"
 ARG NB_GID="100"
 
-ARG TURBOVNC_VERSION=3.0
-
 ARG ijava_version=1.3.0
 ARG java_version=17.0.6
 ARG java_provider=amzn
@@ -296,40 +294,6 @@ RUN \
 ######### mysql end
 
 
-### GUI TOOLS ###
-
-# Add the defaults from /lib/x86_64-linux-gnu, otherwise lots of no version errors
-# cannot be added above otherwise there are errors in the installation of the gui tools
-# Call order: https://unix.stackexchange.com/questions/367600/what-is-the-order-that-linuxs-dynamic-linker-searches-paths-in
-
-ENV LD_LIBRARY_PATH=/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:$CONDA_ROOT/lib
-
-# Install xfce4 & gui tools (firefox and chrome included)
-COPY resources/scripts/install-gui.sh /usr/bin/
-RUN \
-    chmod a+rwx /usr/bin/install-gui.sh && \
-    install-gui.sh \
-    # Cleanup
-    && clean-layer.sh
-
-
-## VNC
-# Remove light-locker to prevent screen lock
-#ARG TURBOVNC=true
-#ARG TURBOVNC_VERSION=3.0
-COPY resources/tools/turbovnc.sh $RESOURCES_PATH/tools/turbovnc.sh
-ENV TURBOVNC_VERSION=${TURBOVNC_VERSION}
-ARG TURBOVNC=true
-RUN \
-    if [ "$TURBOVNC" == "true" ]; then \
-        chmod +x $RESOURCES_PATH/tools/turbovnc.sh ;\
-        /bin/bash $RESOURCES_PATH/tools/turbovnc.sh ;\
-    fi && \
-    # Cleanup
-    clean-layer.sh
-
-### GUI Tools END ####
-
 ## Configurations
 
 COPY resources/scripts/set-jupyter-config.sh resources/scripts/jpy-customize.sh resources/scripts/set-lab-themes.sh /usr/bin/
@@ -358,20 +322,20 @@ COPY resources/config/.bashrc resources/config/.profile /home/$NB_USER/
 COPY resources/bin-hooks/start-custom.sh /usr/local/bin/start-notebook.d/
 
 RUN \
-        chown $NB_USER:$NB_GID -R /opt/sdkman && \
-        find /home/$NB_USER -maxdepth 3 -type d -exec chown $NB_USER:$NB_GID {} \; && \
-        find /home/$NB_USER -maxdepth 3 -type f -exec chown $NB_USER:$NB_GID {} \; && \
+	chown $NB_USER:$NB_GID -R /opt/sdkman && \
+	find /home/$NB_USER -maxdepth 3 -type d -exec chown $NB_USER:$NB_GID {} \; && \
+	find /home/$NB_USER -maxdepth 3 -type f -exec chown $NB_USER:$NB_GID {} \; && \
         mkdir -p /home/$NB_USER/.local/share/jupyter/ && \
         chown entorn:users -R /home/$NB_USER/.local && \
-        chmod +x /usr/local/bin/start-notebook.d/*
+	chmod +x /usr/local/bin/start-notebook.d/*
 
 ## Jupyter Server Proxy config
 ARG CONFIG_NB_FILE=/etc/jupyter/jupyter_server_config.py
 COPY ./proxy-server.entorn-io.py /tmp/
 RUN \
-        cat /tmp/proxy-server.entorn-io.py >> $CONFIG_NB_FILE && \
-        rm /etc/jupyter/jupyter_notebook_config.py && \
-        clean-layer.sh
+	cat /tmp/proxy-server.entorn-io.py >> $CONFIG_NB_FILE && \
+	rm /etc/jupyter/jupyter_notebook_config.py && \	
+	clean-layer.sh
 
 COPY webserver.py /usr/bin/webserver.py
 

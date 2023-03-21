@@ -1,5 +1,5 @@
 {
-    "image": "pluralcamp/entorn-io-dev:ilg-0.0.1",    
+    "image": "pluralcamp/entorn-io-dev:ilg-0.0.2",    
     "features": {
 	"ghcr.io/devcontainers/features/docker-in-docker:2": {},
 	"ghcr.io/devcontainers/features/github-cli:1": {}
