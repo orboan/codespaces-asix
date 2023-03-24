@@ -3,6 +3,8 @@
 # Stops script execution if a command has an error
 set -e
 
+TURBOVNC_VERSION=3.0
+
 echo "Installing turbovnc ..."
 echo ""
 
